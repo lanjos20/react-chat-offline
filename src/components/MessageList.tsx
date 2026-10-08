@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import type { Message } from '../types/message'
 import MessageBubble from './MessageBubble'
 
@@ -7,14 +7,17 @@ type MessageListProps = {
 }
 
 export default function MessageList({ messages }: MessageListProps) {
-  const endOfListRef = useRef<HTMLLIElement>(null)
+  const listRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {
-    endOfListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  useLayoutEffect(() => {
+    const list = listRef.current
+
+    if (list) list.scrollTop = list.scrollHeight
   }, [messages])
 
   return (
     <section
+      ref={listRef}
       className="min-h-0 flex-1 overflow-y-auto p-4 pb-24"
       aria-label="Conversa"
       aria-live="polite"
@@ -28,7 +31,6 @@ export default function MessageList({ messages }: MessageListProps) {
           {messages.map((message) => (
             <MessageBubble key={message.id} message={message} />
           ))}
-          <li ref={endOfListRef} aria-hidden="true" />
         </ol>
       )}
     </section>
