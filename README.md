@@ -1,32 +1,61 @@
-# React + TypeScript + Vite
+# Chat Offline
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Aplicação de chat simples, responsiva e executada no navegador. Permite enviar mensagens alternando entre dois remetentes — usuário e robô — sem backend ou conta.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Histórico de mensagens em ordem cronológica, com mensagens do usuário à direita e do robô à esquerda.
+- Alternância de remetente pelo ícone à esquerda do campo de mensagem; o modo robô é indicado pela borda roxa no input.
+- Campo de texto multilinha que cresce conforme o conteúdo, até um limite, e permite rolagem interna.
+- `Enter` envia a mensagem e `Shift + Enter` insere uma quebra de linha.
+- Botão de envio desabilitado quando o campo está vazio.
+- Rolagem automática para a mensagem mais recente e indicação quando o histórico está vazio.
+- Layout centralizado e responsivo.
 
-## React Compiler
+As mensagens ficam somente na memória da aplicação: não são salvas no navegador nem em um servidor e desaparecem ao recarregar a página.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologias
 
-## Expanding the Oxlint configuration
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Oxlint
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Como executar
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+É necessário ter Node.js e npm instalados.
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Abra no navegador o endereço local informado pelo Vite no terminal.
+
+## Comandos disponíveis
+
+```bash
+npm run dev      # inicia o servidor de desenvolvimento
+npm run lint     # verifica o código com Oxlint
+npm run build    # verifica os tipos e gera a versão de produção
+npm run preview  # serve localmente a versão gerada pelo build
+```
+
+Para testar a versão de produção, execute `npm run build` antes de `npm run preview`.
+
+## Estrutura do projeto
+
+```text
+src/
+├── components/
+│   ├── Chat.tsx           # estado do chat e composição da tela
+│   ├── ChatInput.tsx      # campo de texto, envio e alternância do remetente
+│   ├── MessageBubble.tsx  # apresentação de cada mensagem
+│   ├── MessageList.tsx    # histórico, estado vazio e rolagem automática
+│   └── SenderToggle.tsx   # controle de remetente por ícone
+├── types/
+│   └── message.ts         # tipos Sender e Message
+├── App.tsx
+└── main.tsx
+```
